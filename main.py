@@ -1,6 +1,7 @@
 # imports
 import os
 import imp
+import io
 
 # define our clear function 
 def clear(): 
@@ -29,7 +30,7 @@ class Main:
     # Get Webnovel Name, and create Directory
     wnName = input("Get output File Name: ")
     wnFile = wnName + ".txt"
-    outputFile = open(wnFile, "a")
+    outputFile = io.open(wnFile, "a", encoding="utf-8")
 
     # Get webnovel url
     wnPage = input("Paste base URL here: ")
@@ -44,7 +45,7 @@ class Main:
     # Iterate through chapter links
     for ch in listCh:
         # Clear screen
-        clear()
+        # clear()
 
         # Working on...
         count += 1
@@ -56,7 +57,7 @@ class Main:
             bodyString = "None"
             print("NoneType")
         else:
-            bodyString = str(body.encode(encoding='UTF-8',errors='strict'))
+            bodyString = body
             print("Result")
 
         # print(bodyString)
