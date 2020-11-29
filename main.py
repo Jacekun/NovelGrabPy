@@ -1,8 +1,6 @@
 # imports
 import os
 import imp
-import requests
-from bs4 import BeautifulSoup
 
 # define our clear function 
 def clear(): 
@@ -23,21 +21,14 @@ class Main:
 
     module = imp.load_source( modName, os.path.join('ext', modName + ".py") )
     modInit = getattr( module, "extInfo" )
+    modChapterLink = getattr( module, "chapterLinks" )
 
     print( modInit("Package Info:\n") )
 
     # Get webnovel url
     wnPage = input("Paste base URL here: ")
-    page = requests.get(wnPage)
 
-    soup = BeautifulSoup(page.content, 'html.parser')
-    results = soup.find(id='chapters_1-0')
-
-    chapters = results.find('ul', class_='chapter-chs')
-    chaptersList = chapters.find_all('a', class_='')
-
-    for ch in chaptersList:
-        if ch.has_attr('href'):
-            print(ch.text + " : " + ch['href'])
+    # Get Chapter Links, from ext
+    modChapterLink(wnPage)
 
     print("Done!")
