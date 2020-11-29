@@ -22,17 +22,28 @@ class Main:
     module = imp.load_source( modName, os.path.join('ext', modName + ".py") )
     modInit = getattr( module, "extInfo" )
     modChapterLink = getattr( module, "chapterLinks" )
+    modCont = getattr( module, "getContents" )
 
     print( modInit("Package Info:\n") )
+
+    # Get Webnovel Name, and create Directory
+    wnName = input("Get Folder Name: ")
+    wnFile = wnName + ".txt"
+    outputFile = open(wnFile, "a")
 
     # Get webnovel url
     wnPage = input("Paste base URL here: ")
 
     # Get Chapter Links, from ext
     listCh = modChapterLink(wnPage)
+    temp = ""
 
-    # Print
+    # Iterate through chapter links
     for ch in listCh:
-        print(ch)
+        # Get Body and write to File
+        bodyString = modCont(ch)
+        outputFile.write("Source:" + ch + "\nBody:\n" + bodyString + "\n\n")
 
+    # Close output file
+    outputFile.close()
     print("Done!")

@@ -19,7 +19,6 @@ def chapterLinks(URL):
     x = []
 
     page = requests.get(URL)
-
     soup = BeautifulSoup(page.content, 'html.parser')
 
     for i in range(0, int(tab)):
@@ -34,3 +33,19 @@ def chapterLinks(URL):
                 x.append(ch['href'])
 
     return x
+
+def getContents(URL):
+    # Setup vars
+    retVal = ""
+
+    # Get body
+    page = requests.get(URL)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    results = soup.find(id='growfoodsmart')
+
+    bodyP = results.find_all('p', class_='')
+
+    for p in bodyP:
+        retVal += p.text + "\n"
+
+    return retVal
