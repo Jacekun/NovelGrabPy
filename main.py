@@ -27,7 +27,7 @@ class Main:
     print( modInit("Package Info:\n") )
 
     # Get Webnovel Name, and create Directory
-    wnName = input("Get Folder Name: ")
+    wnName = input("Get output File Name: ")
     wnFile = wnName + ".txt"
     outputFile = open(wnFile, "a")
 
