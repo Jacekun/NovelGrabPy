@@ -41,11 +41,13 @@ def getContents(URL):
     # Get body
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, 'html.parser')
-    results = soup.find(id='growfoodsmart')
+    results = soup.find("div", {"id": "growfoodsmart"})
 
-    bodyP = results.find_all('p', class_='')
+    if None in results:
+        return ""
 
-    for p in bodyP:
-        retVal += p.text + "\n"
+    #bodyP = results.find_all('p', class_='')
+    #for p in bodyP:
+        #retVal += p.text + "\n"
 
-    return retVal
+    return results.text

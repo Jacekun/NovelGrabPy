@@ -51,7 +51,15 @@ class Main:
         print("Working on ", str(count), " out of ", str(countMax), ".... Percentage: ", str((count/countMax)*100), "%")
 
         # Get Body and write to File
-        bodyString = modCont(ch)
+        body = modCont(ch)
+        if body is None:
+            bodyString = "None"
+            print("NoneType")
+        else:
+            bodyString = str(body.encode(encoding='UTF-8',errors='strict'))
+            print("Result")
+
+        # print(bodyString)
         outputFile.write("Source:" + ch + "\nBody:\n" + bodyString + "\n\n")
 
         # Done
