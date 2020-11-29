@@ -50,50 +50,39 @@ def getContents(URL):
         return ""
 
     retVal = str(results)
-
-    #bodyP = results.find_all('p', class_='')
-    #for p in bodyP:
-        #retVal += p.text + "\n"
-
-    # Replace <br /><br />
-    #for elem in results.find_all(["a", "p", "div", "h3", "br"]):
-        #elem = elem.replace_with(elem.text + "\n\n")
-    
-    # Get the Text, without other Tags
-    # retVal = results.content
         
-    # 
+    # Get string after >
     try:
-        # Get string after >
         target = '>'
         retVal = retVal[retVal.index(target) + len(target):]
     except:
         retVal = retVal
     
+    # Relace breaks
     try:
-        # Relace breaks
         retVal = retVal.replace('<br>', '\n')
     except:
         retVal = retVal
     
+    # Relace P tag
     try:
-        # Relace P tag
         retVal = retVal.replace('<p>', '\n')
     except:
         retVal = retVal
 
+    # Relace end p tag
     try:
-        # Relace breaks
         retVal = retVal.replace('</p>', '')
     except:
         retVal = retVal
     
+    # Encode to UTF-8
     try:
-        # Encode to UTF-8
         retVal = str(retVal.encode(encoding='utf-8'))
     except:
         retVal = retVal
     
-    print(retVal)
+    # print(retVal)
 
+    # return val to main App
     return retVal 

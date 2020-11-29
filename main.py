@@ -45,7 +45,7 @@ class Main:
     # Iterate through chapter links
     for ch in listCh:
         # Clear screen
-        # clear()
+        clear()
 
         # Working on...
         count += 1
@@ -55,10 +55,10 @@ class Main:
         body = modCont(ch)
         if body is None:
             bodyString = "None"
-            print("NoneType")
+            #print("NoneType")
         else:
             bodyString = body
-            print("Result")
+            #print("Result")
 
         # print(bodyString)
         outputFile.write("Source:" + ch + "\nBody:\n" + bodyString + "\n\n")
