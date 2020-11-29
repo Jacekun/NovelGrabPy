@@ -36,13 +36,26 @@ class Main:
 
     # Get Chapter Links, from ext
     listCh = modChapterLink(wnPage)
-    temp = ""
+
+    # Counters
+    count = 0
+    countMax = len(listCh)
 
     # Iterate through chapter links
     for ch in listCh:
+        # Clear screen
+        clear()
+
+        # Working on...
+        count += 1
+        print("Working on ", str(count), " out of ", str(countMax), ".... Percentage: ", str((count/countMax)*100), "%")
+
         # Get Body and write to File
         bodyString = modCont(ch)
         outputFile.write("Source:" + ch + "\nBody:\n" + bodyString + "\n\n")
+
+        # Done
+        print(str(count), " out of ", str(countMax), " done! Percentage: ", str((count/countMax)*100), "%")
 
     # Close output file
     outputFile.close()
