@@ -13,16 +13,24 @@ def extInfo(stringVal):
     return stringVal + string
 
 def chapterLinks(URL):
+
+    # Get number of Tabs
+    tab = input("Number of Tabs: ")
+    x = []
+
     page = requests.get(URL)
 
     soup = BeautifulSoup(page.content, 'html.parser')
-    results = soup.find(id='chapters_1-0')
 
-    chapters = results.find('ul', class_='chapter-chs')
-    chaptersList = chapters.find_all('a', class_='')
+    for i in range(0, int(tab)):
 
-    for ch in chaptersList:
-        if ch.has_attr('href'):
-            print(ch.text + " : " + ch['href'])
+        results = soup.find(id='chapters_1-'+str(i))
+        chapters = results.find('ul', class_='chapter-chs')
+        chaptersList = chapters.find_all('a', class_='')
 
-    return ""
+        # Get the exact links, inside href
+        for ch in chaptersList:
+            if ch.has_attr('href'):
+                x.append(ch['href'])
+
+    return x

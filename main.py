@@ -29,6 +29,10 @@ class Main:
     wnPage = input("Paste base URL here: ")
 
     # Get Chapter Links, from ext
-    modChapterLink(wnPage)
+    listCh = modChapterLink(wnPage)
+
+    # Print
+    for ch in listCh:
+        print(ch)
 
     print("Done!")
