@@ -61,7 +61,7 @@ class Main:
             #print("Result")
 
         # print(bodyString)
-        outputFile.write("Source:" + ch + "\nBody:\n" + bodyString + "\n\n")
+        outputFile.write("Source: " + ch + "\nBody:\n" + bodyString + "\n\n")
 
         # Done
         print(str(count), " out of ", str(countMax), " done! Percentage: ", str((count/countMax)*100), "%")
