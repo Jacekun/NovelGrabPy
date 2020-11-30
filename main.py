@@ -66,13 +66,14 @@ class Main:
     # Get webnovel details, from module ext
     novelInfo = modNovelInfo(wnPage)
 
-    wnDocObj.add_paragraph("Title: " + novelTitle)
-    wnDocObj.add_paragraph("Alt. Name: " + novelInfo[0])
-    wnDocObj.add_paragraph("Author(s): " + novelInfo[1])
-    wnDocObj.add_paragraph("Artist(s): " + novelInfo[2])
-    wnDocObj.add_paragraph("Description: " + novelInfo[3])
-    wnDocObj.add_paragraph("Year: " + novelInfo[4])
-    wnDocObj.add_paragraph("Genre: " + novelInfo[5])
+    wnDocObj.add_paragraph( "Title: " + novelTitle.strip() )
+    wnDocObj.add_paragraph( "Alt. Name: " + novelInfo[0].strip() )
+    wnDocObj.add_paragraph( "Author(s): " + novelInfo[1].strip() )
+    wnDocObj.add_paragraph( "Artist(s): " + novelInfo[2].strip() )
+    wnDocObj.add_paragraph( "Description: " + novelInfo[3].strip() )
+    wnDocObj.add_paragraph( "Year: " + novelInfo[4].strip() )
+    wnDocObj.add_paragraph( "Genre: " + novelInfo[5].strip() )
+    wnDocObj.save(wnDocFile)
 
     # Get Chapter Links, from module ext
     listCh = modChapterLink(wnPage)
