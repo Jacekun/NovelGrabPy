@@ -73,7 +73,7 @@ class Main:
     wnDocObj.add_paragraph( "Description: " + novelInfo[3].strip() )
     wnDocObj.add_paragraph( "Year: " + novelInfo[4].strip() )
     wnDocObj.add_paragraph( "Genre: " + novelInfo[5].strip() )
-    wnDocObj.save(wnDocFile)
+    # wnDocObj.save(wnDocFile)
 
     # Get Chapter Links, from module ext
     listCh = modChapterLink(wnPage)
