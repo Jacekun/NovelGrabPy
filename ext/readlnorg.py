@@ -29,9 +29,15 @@ def extInfo(stringVal):
     novelDetails(URL)
     :param URL: Base Link of the webnovel
     :returns: List of strings
+        [0] Alt. Names
+        [1] Author
+        [2] Artist
+        [3] Desc
+        [4] Year
+        [5] Genre
 '''
 def novelDetails(URL):
-    retList = []
+    retList = [ '', '', '', '', '', '' ]
 
     # Download webpage
     page = requests.get(URL)
@@ -57,11 +63,24 @@ def novelDetails(URL):
                     else:
                         header = item.find('div', class_='novel-detail-header')
                         if header is not None:
-                            retList.append(header)
-
-                        body = item.find('div', class_='novel-detail-body')
-                        if body is not None:
-                            retList.append(body)
+                            # Get detail Body (Main contents)
+                            body = item.find('div', class_='novel-detail-body')
+                            if body is not None:
+                            # Switch header
+                                if "Alternative Names" in header.text:
+                                    retList[0] = body.text
+                                elif "Author" in header.text:
+                                    retList[1] = body.text
+                                elif "Artist" in header.text:
+                                    retList[2] = body.text
+                                elif "Description" in header.text:
+                                    retList[3] = body.text
+                                elif "Year" in header.text:
+                                    retList[4] = body.text
+                                elif "Genre" in header.text:
+                                    retList[5] = body.text
+                # End of Inner 'For loop'
+        # End of Outer 'For Loop'      
     # Return List
     return retList
 
