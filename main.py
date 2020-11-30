@@ -23,10 +23,18 @@ def Log(string):
 
 # Main execution
 class Main:
-    # Get module
-    modName = input("Enter module (ext) filename (without .py): ")
+    # Var
+    notValid = True
 
-    module = imp.load_source( modName, os.path.join('ext', modName + ".py") )
+    while notValid:
+        # Get valid module
+        modName = input("Enter module (ext) filename (without .py): ")
+        try:
+            module = imp.load_source( modName, os.path.join('ext', modName + ".py") )
+            notValid = False
+        except:
+            notValid = True
+
     modInit = getattr( module, "extInfo" )
     modNovelInfo = getattr( module, "novelDetails" )
     modChapterLink = getattr( module, "chapterLinks" )
