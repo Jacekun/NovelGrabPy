@@ -1,6 +1,7 @@
 # imports
 import requests
 from bs4 import BeautifulSoup
+import re
 import html
 
 # global vars
@@ -42,62 +43,7 @@ def chapterLinks(URL):
 
     return x
 
-def getContents(URL):
-    # Setup vars
-    retVal = ""
-
-    # Get body
-    page = requests.get(URL)
-    if page.status_code != 200:
-        print("Unable to download page: " + URL)
-        return retVal
-
-    soup = BeautifulSoup(page.content, 'html.parser')
-
-    results = soup.find("div", {"id": "growfoodsmart"})
-
-    if None in results:
-        return ""
-
-    retVal = str(results)
-        
-    # Get string after >
-    try:
-        target = '>'
-        retVal = retVal[retVal.index(target) + len(target):]
-    except:
-        retVal = retVal
-    
-    # Relace breaks
-    try:
-        retVal = retVal.replace('<br>', '\n')
-    except:
-        retVal = retVal
-    
-    # Relace P tag
-    try:
-        retVal = retVal.replace('<p>', '\n')
-    except:
-        retVal = retVal
-
-    # Relace end p tag
-    try:
-        retVal = retVal.replace('</p>', '')
-    except:
-        retVal = retVal
-    
-    # Encode to UTF-8
-    try:
-        retVal = str(retVal.encode(encoding='utf-8'))
-    except:
-        retVal = retVal
-    
-    # print(retVal)
-
-    # return val to main App
-    return retVal
-
-def getContentsNew(URL):
+def getChapterBody(URL):
     # Setup vars
     retVal = ""
 
