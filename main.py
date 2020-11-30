@@ -25,7 +25,7 @@ class Main:
     module = imp.load_source( modName, os.path.join('ext', modName + ".py") )
     modInit = getattr( module, "extInfo" )
     modChapterLink = getattr( module, "chapterLinks" )
-    modCont = getattr( module, "getChapterBody" )
+    modChInfo = getattr( module, "getChapterInfo" )
 
     extInfo = modInit("Package Info:\n")
     print( extInfo )
@@ -56,28 +56,41 @@ class Main:
 
         # Working on...
         count += 1
-        status = "Working on ", str(count), " out of ", str(countMax), ".... Percentage: ", str((count/countMax)*100), "%"
+        status = "Working on " + str(count) + " out of " + str(countMax) + ".... Percentage: " + str((count/countMax)*100) + "%"
         print( status )
         logFile.write( status )
+        bodyString = ""
+        titleString = ""
 
         # Get Body and write to File
-        body = modCont(ch)
-        if body is None:
-            bodyString = "None"
-            logFile.write( "Returns a NoneType" )
+        body = modChInfo(ch)
+        if len(body) < 1:
+            bodyString = "NoneBody"
+            titleString = "NoneTitle"
+            logFile.write( "Returns Empty Result" )
         else:
-            bodyString = body
-            logFile.write( "Has contents" )
+            # Get the title
+            try:
+                titleString = body[0]
+                logFile.write( "Has title" )
+            except:
+                logFile.write( "No title contents" )
+            # Get the chapter body content
+            try:
+                bodyString = body[1]
+                logFile.write( "Has contents" )
+            except:
+                logFile.write( "No body contents" )
 
         # Write to Output File
         try:
-            outputFile.write("Source: " + ch + "\nBody:\n" + bodyString + "\n\n")
+            outputFile.write("Source: " + ch + "\nTitle: " + titleString +"\nBody:\n" + bodyString + "\n\n")
             logFile.write( "Written to output file!" )
         except:
             logFile.write( "Not written to output! Encountered an error!" )
 
         # Done
-        status = str(count), " out of ", str(countMax), " done! Percentage: ", str((count/countMax)*100), "%"
+        status = str(count) + " out of " + str(countMax) + " done! Percentage: " + str((count/countMax)*100) + "%"
         print( status )
         logFile.write( status )
     # End of For Loop

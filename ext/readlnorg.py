@@ -17,6 +17,11 @@ def extInfo(stringVal):
     string = "Name: " + name + "\nVersion: " + version + "\nAuthor: " + author
     return stringVal + string
 
+'''
+    chapterLinks
+    :param URL: Base URL of Webnovel
+    :returns: List of URLs of Chapter links
+'''
 def chapterLinks(URL):
 
     # Get number of Tabs
@@ -43,18 +48,29 @@ def chapterLinks(URL):
 
     return x
 
-def getChapterBody(URL):
+'''
+    getChapterInfo
+    :param URL: Link of the chapter
+    :returns: List
+        -[0] Title
+        -[1] Content 
+'''
+def getChapterInfo(URL):
     # Setup vars
-    retVal = ""
+    retList = []
+    chBody = ""
 
     # Get Chapter Page, from the Net
     page = requests.get(URL)
     if page.status_code != 200:
         print("Unable to download page: " + URL)
-        return retVal
+        return retList
 
     # get the webpage Text
     soup = BeautifulSoup(page.text, 'lxml')
+
+    # Get the Chapter Title, append to resultList
+    retList.append(soup.title.text[5:])
 
     # Find the chapter body contents
     chapter_text = soup.find('div', id='growfoodsmart')
@@ -62,20 +78,23 @@ def getChapterBody(URL):
         raise RuntimeError("Chapter has no contents")
     
     # Typecast result to string, including tags
-    retVal = str(chapter_text)
+    chBody = str(chapter_text)
 
     # Get string after >
     try:
         target = '>'
-        retVal = retVal[retVal.index(target) + len(target):]
+        chBody = chBody[chBody.index(target) + len(target):]
     except:
-        retVal = retVal
+        chBody = chBody
     
     # Remove Last characters, the </div> tag
     try:
-        retVal = retVal[:-6]
+        chBody = chBody[:-6]
     except:
-        retVal = retVal
+        chBody = chBody
+
+    # Append to retList
+    retList.append(chBody)
 
     # Return chapter body string
-    return retVal
+    return retList
