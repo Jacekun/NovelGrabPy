@@ -21,7 +21,7 @@ def clear():
 def Log(string):
     # Open Log File
     with open("AppLog.log", "a") as logFile:
-        logFile.write('DateTime: ' + str(datetime.datetime.now()) + '\n' +string + '\n')
+        logFile.write('[' + str(datetime.datetime.now()) + '] ' +string + '\n')
 
 # Main execution
 class Main:
@@ -144,7 +144,12 @@ class Main:
     outputFile.close()
 
     # Save to Doc file
-    wnDocObj.Save(wnDocFile)
+    try:
+        wnDocObj.save(wnDocFile)
+        Log( "Written to docx file: " + wnDocFile )
+    except:
+        Log( "Cannot write to docx file! " + wnDocFile )
+
     print("Done!")
 
     Log( "##################################################################" )
