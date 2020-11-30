@@ -2,6 +2,7 @@
 import os
 import imp
 import io
+import datetime
 
 # define our clear function 
 def clear(): 
@@ -18,11 +19,10 @@ def clear():
 def Log(string):
     # Open Log File
     with open("AppLog.log", "a") as logFile:
-        logFile.write(string + '\n')
+        logFile.write('DateTime: ' + str(datetime.datetime.now()) + '\n' +string + '\n')
 
 # Main execution
 class Main:
-
     # Get module
     modName = input("Enter module: ")
 
@@ -48,9 +48,7 @@ class Main:
     Log( "Base URL: " + wnPage )
 
     # Get details
-    for txt in modNovelInfo(wnPage):
-        print (txt)
-    exit
+    novelInfo = modNovelInfo(wnPage)
 
     # Get Chapter Links, from ext
     listCh = modChapterLink(wnPage)
@@ -109,3 +107,5 @@ class Main:
     # Close output file
     outputFile.close()
     print("Done!")
+
+    Log( "##################################################################" )

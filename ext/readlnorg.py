@@ -90,7 +90,6 @@ def novelDetails(URL):
     :returns: List of URLs of Chapter links
 '''
 def chapterLinks(URL):
-
     # Get number of Tabs
     tab = input("Number of Tabs: ")
     x = []
