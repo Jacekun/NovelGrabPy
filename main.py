@@ -14,10 +14,14 @@ def clear():
     else: 
         _ = os.system('clear')
 
+# Logger
+def Log(string):
+    # Open Log File
+    with open("AppLog.log", "a") as logFile:
+        logFile.write(string + '\n')
+
 # Main execution
 class Main:
-    # Open Log
-    logFile = io.open("AppLog.log", "a", encoding="utf-8")
 
     # Get module
     modName = input("Enter module: ")
@@ -27,19 +31,20 @@ class Main:
     modChapterLink = getattr( module, "chapterLinks" )
     modChInfo = getattr( module, "getChapterInfo" )
 
+    # Print module (extension) details
     extInfo = modInit("Package Info:\n")
     print( extInfo )
-    logFile.write( extInfo + '\n')
+    Log( extInfo )
 
     # Get Webnovel Name, and create Directory
     wnName = input("Get output File Name: ")
     wnFile = wnName + ".txt"
     outputFile = io.open(wnFile, "a", encoding="utf-8")
-    logFile.write( "OutputName: " + wnFile + '\n' )
+    Log( "OutputName: " + wnFile )
 
     # Get webnovel url
     wnPage = input("Paste base URL here: ")
-    logFile.write( "Base URL: " + wnPage + '\n' )
+    Log( "Base URL: " + wnPage )
 
     # Get Chapter Links, from ext
     listCh = modChapterLink(wnPage)
@@ -58,7 +63,7 @@ class Main:
         count += 1
         status = "Working on " + str(count) + " out of " + str(countMax) + ".... Percentage: " + str((count/countMax)*100) + "%"
         print( status )
-        logFile.write( status )
+        Log( status )
         bodyString = ""
         titleString = ""
 
@@ -67,37 +72,34 @@ class Main:
         if len(body) < 1:
             bodyString = "NoneBody"
             titleString = "NoneTitle"
-            logFile.write( "Returns Empty Result" )
+            Log( "Returns Empty Result" )
         else:
             # Get the title
             try:
                 titleString = body[0]
-                logFile.write( "Has title" )
+                Log( "Has title" )
             except:
-                logFile.write( "No title contents" )
+                Log( "No title contents" )
             # Get the chapter body content
             try:
                 bodyString = body[1]
-                logFile.write( "Has contents" )
+                Log( "Has contents" )
             except:
-                logFile.write( "No body contents" )
+                Log( "No body contents" )
 
         # Write to Output File
         try:
             outputFile.write("Source: " + ch + "\nTitle: " + titleString +"\nBody:\n" + bodyString + "\n\n")
-            logFile.write( "Written to output file!" )
+            Log( "Written to output file!" )
         except:
-            logFile.write( "Not written to output! Encountered an error!" )
+            Log( "Not written to output! Encountered an error!" )
 
         # Done
         status = str(count) + " out of " + str(countMax) + " done! Percentage: " + str((count/countMax)*100) + "%"
         print( status )
-        logFile.write( status )
+        Log( status )
     # End of For Loop
 
     # Close output file
     outputFile.close()
     print("Done!")
-
-    # Close LogFile
-    logFile.close()
