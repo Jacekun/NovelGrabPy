@@ -28,6 +28,7 @@ class Main:
 
     module = imp.load_source( modName, os.path.join('ext', modName + ".py") )
     modInit = getattr( module, "extInfo" )
+    modNovelInfo = getattr( module, "novelDetails" )
     modChapterLink = getattr( module, "chapterLinks" )
     modChInfo = getattr( module, "getChapterInfo" )
 
@@ -45,6 +46,11 @@ class Main:
     # Get webnovel url
     wnPage = input("Paste base URL here: ")
     Log( "Base URL: " + wnPage )
+
+    # Get details
+    for txt in modNovelInfo(wnPage):
+        print (txt)
+    exit
 
     # Get Chapter Links, from ext
     listCh = modChapterLink(wnPage)

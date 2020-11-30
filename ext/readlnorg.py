@@ -10,15 +10,63 @@ name = "ReadLightNovel"
 version = "1.0.0"
 author = "Jace"
 
+'''
+    basePage()
+    :returns: Base URL
+'''
 def basePage():
     return page
 
+'''
+    extInfo()
+    :returns: Extension info
+'''
 def extInfo(stringVal):
     string = "Name: " + name + "\nVersion: " + version + "\nAuthor: " + author
     return stringVal + string
 
 '''
-    chapterLinks
+    novelDetails(URL)
+    :param URL: Base Link of the webnovel
+    :returns: List of strings
+'''
+def novelDetails(URL):
+    retList = []
+
+    # Download webpage
+    page = requests.get(URL)
+    if page.status_code != 200:
+        print("Unable to download page: " + URL)
+        return retList
+    # Save webpage to var
+    soup = BeautifulSoup(page.text, 'lxml')
+
+    # Check if not Null
+    if soup is None:
+        return retList
+    else:
+        for nd in soup.find_all('div', class_='novel-details'):
+            # Check if None
+            if nd is None:
+                continue
+            else:
+                for item in nd.find_all('div', class_='novel-detail-item'):
+                    # Check if None
+                    if item is None:
+                        continue
+                    else:
+                        header = item.find('div', class_='novel-detail-header')
+                        if header is not None:
+                            retList.append(header)
+
+                        body = item.find('div', class_='novel-detail-body')
+                        if body is not None:
+                            retList.append(body)
+    # Return List
+    return retList
+
+'''
+    chapterLinks()
     :param URL: Base URL of Webnovel
     :returns: List of URLs of Chapter links
 '''
@@ -28,6 +76,7 @@ def chapterLinks(URL):
     tab = input("Number of Tabs: ")
     x = []
 
+    # Download webpage
     page = requests.get(URL)
     if page.status_code != 200:
         print("Unable to download page: " + URL)
@@ -45,11 +94,11 @@ def chapterLinks(URL):
         for ch in chaptersList:
             if ch.has_attr('href'):
                 x.append(ch['href'])
-
+    # Return list of URLs
     return x
 
 '''
-    getChapterInfo
+    getChapterInfo()
     :param URL: Link of the chapter
     :returns: List
         -[0] Title
