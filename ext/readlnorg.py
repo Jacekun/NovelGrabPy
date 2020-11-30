@@ -75,7 +75,9 @@ def getChapterInfo(URL):
     # Find the chapter body contents
     chapter_text = soup.find('div', id='growfoodsmart')
     if chapter_text is None:
-        raise RuntimeError("Chapter has no contents")
+        # raise RuntimeError("Chapter has no contents")
+        retList.append( "" )
+        return retList
     
     # Typecast result to string, including tags
     chBody = str(chapter_text)
