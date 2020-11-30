@@ -23,7 +23,7 @@ class Main:
     module = imp.load_source( modName, os.path.join('ext', modName + ".py") )
     modInit = getattr( module, "extInfo" )
     modChapterLink = getattr( module, "chapterLinks" )
-    modCont = getattr( module, "getContents" )
+    modCont = getattr( module, "getContentsNew" )
 
     print( modInit("Package Info:\n") )
 
