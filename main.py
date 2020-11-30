@@ -24,7 +24,7 @@ def Log(string):
 # Main execution
 class Main:
     # Get module
-    modName = input("Enter module: ")
+    modName = input("Enter module (ext) filename (without .py): ")
 
     module = imp.load_source( modName, os.path.join('ext', modName + ".py") )
     modInit = getattr( module, "extInfo" )
@@ -37,7 +37,7 @@ class Main:
     print( extInfo )
     Log( extInfo )
 
-    # Get Webnovel Name, and create Directory
+    # Get Webnovel File Name, and create it
     wnName = input("Get output File Name: ")
     wnFile = wnName + ".txt"
     outputFile = io.open(wnFile, "a", encoding="utf-8")
@@ -47,10 +47,10 @@ class Main:
     wnPage = input("Paste base URL here: ")
     Log( "Base URL: " + wnPage )
 
-    # Get details
+    # Get webnovel details, from module ext
     novelInfo = modNovelInfo(wnPage)
 
-    # Get Chapter Links, from ext
+    # Get Chapter Links, from module ext
     listCh = modChapterLink(wnPage)
 
     # Counters
@@ -71,7 +71,7 @@ class Main:
         bodyString = ""
         titleString = ""
 
-        # Get Body and write to File
+        # Get Body content, from module ext. And write to File
         body = modChInfo(ch)
         if len(body) < 1:
             bodyString = "NoneBody"
