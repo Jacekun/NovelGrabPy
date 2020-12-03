@@ -79,6 +79,10 @@ def novelDetails(URL):
                                     retList[4] = body.text
                                 elif "Genre" in header.text:
                                     retList[5] = body.text
+                                else:
+                                    continue
+                        else:
+                            continue
                 # End of Inner 'For loop'
         # End of Outer 'For Loop'      
     # Return List
@@ -90,6 +94,9 @@ def novelDetails(URL):
     :returns: List of URLs of Chapter links
 '''
 def chapterLinks(URL):
+    # Get number of Volumes
+    vol = input("Number of Volumes: ")
+    
     # Get number of Tabs
     tab = input("Number of Tabs: ")
     x = []
@@ -102,16 +109,19 @@ def chapterLinks(URL):
 
     soup = BeautifulSoup(page.content, 'html.parser')
 
-    for i in range(0, int(tab)):
+    # For every volume
+    for volCount in range(1, int(vol))
+        # For every tab inside a volume
+        for tabCount in range(0, int(tab)):
 
-        results = soup.find(id='chapters_1-'+str(i))
-        chapters = results.find('ul', class_='chapter-chs')
-        chaptersList = chapters.find_all('a', class_='')
+            results = soup.find(id='chapters_'+str(volCount)+'-'+str(tabCount))
+            chapters = results.find('ul', class_='chapter-chs')
+            chaptersList = chapters.find_all('a', class_='')
 
-        # Get the exact links, inside href
-        for ch in chaptersList:
-            if ch.has_attr('href'):
-                x.append(ch['href'])
+            # Get the exact links, inside href
+            for ch in chaptersList:
+                if ch.has_attr('href'):
+                    x.append(ch['href'])
     # Return list of URLs
     return x
 
